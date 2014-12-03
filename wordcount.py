@@ -47,8 +47,9 @@ import re
 # Then print_words() and print_top() can just call the utility function.
 
 def read_words(filename):
-  s = open(filename).read().lower()
-  words = re.findall(r"[a-zA-Z']+", s)
+  s = open(filename).read().lowercase()
+  #words = re.findall(r"[a-zA-Z']+", s)
+  words = re.findall(r"\w[\w']*", s)
   d = {}
   for word in words:
     if word not in d:
@@ -62,8 +63,9 @@ def print_words(filename):
     print word, count
 
 def print_top(filename):
-  pairs = reversed(sorted(read_words(filename), key=lambda (word, count): count))
-  for word, count in list(pairs)[0:10]:
+  # pairs = reversed(sorted(read_words(filename), key=lambda (word, count): count))
+  pairs = sorted(read_words(filename), key=lambda (word, count): count, reverse=True)
+  for word, count in pairs[:20]:
     print word, count
 
 ###
